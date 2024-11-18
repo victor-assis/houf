@@ -1,0 +1,9 @@
+/*
+** Hollom Styles Flexbox
+*/
+@use '../mixins/flex' as *;
+
+/// @group module-flex
+.holl {
+  @include create-flex-helpers();
+}

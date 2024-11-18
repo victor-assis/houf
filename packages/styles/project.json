@@ -1,0 +1,60 @@
+{
+  "name": "styles",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/styles/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "start": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "sass --watch packages/styles/src:dist/styles/css --no-source-map --stop-on-error --load-path=node_modules --load-path=dist/tokens"
+        ],
+        "parallel": false
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "sass packages/styles/src:dist/styles/css --style=compressed --no-source-map --stop-on-error --load-path=node_modules --load-path=dist/tokens",
+          "shx cp packages/styles/package.json dist/styles/",
+          "shx cp packages/styles/README.md dist/styles/"
+        ],
+        "parallel": false
+      }
+    },
+    "docs": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "shx mkdir -p dist/docs/styles",
+          "sassdoc ./packages/styles/src/* -c ./packages/styles/sassdoc.json -v -d dist/docs/styles",
+          "sassdoc ./packages/styles/src/* -c ./packages/styles/sassdoc.json -p -v > dist/docs/styles/stylesdoc.json"
+        ],
+        "parallel": false
+      }
+    },
+    "stylelint": {
+      "executor": "nx-stylelint:lint",
+      "options": {
+        "configfile": "packages/styles/.stylelintrc.json",
+        "formatter": "verbose",
+        "lintFilePatterns": [
+          "packages/styles/src/**/*.css",
+          "packages/styles/src/**/*.scss"
+        ]
+      }
+    },
+    "zip": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "shx mkdir -p dist/tmp",
+          "bestzip dist/tmp/styles.zip dist/styles/*"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,104 @@
+/*
+** Hollom Styles Layout
+*/
+@use 'tokens' as *;
+@use '../mixins/layout' as *;
+@use '../mixins/media-query' as *;
+
+%holl-container {
+  box-sizing: border-box;
+  margin: 0 auto;
+  width: 100%;
+}
+
+%holl-row {
+  display: grid;
+  margin: 0;
+  width: 100%;
+}
+
+%holl-col {
+  grid-column-end: auto;
+  margin: 0;
+  width: auto;
+}
+
+/// @group module-layout
+[class*='holl-container'] {
+  @extend %holl-container;
+}
+
+/// @group module-layout
+.holl-container {
+  @include create-container();
+}
+
+/// @group module-layout
+.holl-container-fluid {
+  @include create-container-fluid();
+}
+
+/// @group module-layout
+[class*='holl-row'] {
+  @extend %holl-row;
+}
+
+/// @group module-layout
+.holl-row {
+  @include create-row();
+  @include create-row-max();
+  @include create-row-fixed();
+}
+
+[class*='holl-grid-'],
+.holl-grid {
+  @extend %holl-row;
+
+  gap: $holl_size_general_16x;
+  grid-auto-columns: 1fr;
+}
+
+.holl-grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.holl-grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.holl-grid-small {
+  gap: $holl_size_general_8x;
+
+  @include media-q($from: xs) {
+    gap: $holl_size_general_12x;
+  }
+}
+
+.holl-grid-large {
+  gap: $holl_size_general_32x;
+}
+
+/// @group module-layout
+.holl-no-gutters {
+  gap: 0 !important;
+}
+
+.holl-gutters {
+  @include create-gutters();
+}
+
+/// @group module-layout
+[class*='holl-col-'] {
+  @extend %holl-col;
+}
+
+/// @group module-layout
+.holl-col {
+  @extend %holl-col;
+
+  @include create-columns();
+}
+
+.holl-col-auto {
+  grid-row: 1 / 2;
+}

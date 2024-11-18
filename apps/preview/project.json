@@ -1,0 +1,19 @@
+{
+  "name": "preview",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/preview",
+  "projectType": "application",
+  "tags": [],
+  "implicitDependencies": ["styles", "tools", "tokens", "linters"],
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "vite build apps/preview --outDir ../../dist/preview"
+        ],
+        "parallel": false
+      }
+    }
+  }
+}

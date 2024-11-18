@@ -1,0 +1,35 @@
+a {
+  color: var(--text-2);
+  display: inline-grid;
+  grid-auto-flow: column;
+  gap: 0.5rem;
+  align-items: center;
+
+  &:hover {
+    color: var(--text-1);
+  }
+
+  &:not(:hover) {
+    text-decoration: none;
+  }
+
+  &:hover {
+    & > svg > .secondary {
+      stroke: var(--text-2);
+      fill: var(--surface-document);
+    }
+
+    & > svg > .primary {
+      fill: var(--text-2);
+    }
+  }
+
+  &:focus:not(:focus-visible) {
+    outline: none
+  }
+
+  & > svg {
+    inline-size: 1rem;
+    block-size: 1rem;
+  }
+}

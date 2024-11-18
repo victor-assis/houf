@@ -1,0 +1,23 @@
+name: Delete link temp preview
+
+on:
+  delete:
+    branches:
+      - 'feat**'
+      - 'fix**'
+      - 'docs**'
+      - 'release**'
+    types:
+      - branch
+
+jobs:
+  delete:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete temp Preview
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          exclude_assets: tmp/${{ github.event.ref }}
+          keep_files: true
+

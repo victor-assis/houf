@@ -1,0 +1,16 @@
+{
+  "name": "@hollom/styles",
+  "version": "0.0.0",
+  "main": "css/styles.css",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/victor-assis/hollom"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "sass": "^1.82.0"
+  }
+}

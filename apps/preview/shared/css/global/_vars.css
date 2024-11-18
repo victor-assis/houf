@@ -1,0 +1,12 @@
+@import "theme.css";
+
+:root {
+  --body-rails: 4rem;
+  --sidebar-width: 16rem;
+  --search-width: 24rem;
+  --brand-border_radius: 0.25rem;
+  --shadow-color-1: hsl(0 0% 0% / 0.3);
+  --shadow-color-2: hsl(0 0% 0% / 0.15);
+  --depth-5: 0 4px 4px 0 var(--shadow-color-1), 0 8px 12px 6px var(--shadow-color-2);
+}
+

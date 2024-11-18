@@ -1,0 +1,40 @@
+{
+  "name": "tools",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/tools/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/tools",
+        "main": "packages/tools/src/index.ts",
+        "tsConfig": "packages/tools/tsconfig.lib.json",
+        "format": ["esm", "cjs"],
+        "declarationRootDir": "packages/tools/src",
+        "assets": ["packages/tools/package.json", "packages/tools/README.md"]
+      }
+    },
+    "docs": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "shx mkdir -p dist/docs/tools",
+          "typedoc --options packages/tools/typedoc.json"
+        ],
+        "parallel": false
+      }
+    },
+    "zip": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "shx mkdir -p dist/tmp",
+          "bestzip dist/tmp/tools.zip dist/tools/*"
+        ]
+      }
+    }
+  }
+}

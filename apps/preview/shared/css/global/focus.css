@@ -1,0 +1,16 @@
+:focus {
+  outline-color: light-dark(var(--brand-primary), var(--brand-secondary));
+}
+
+:where(:not(:active):focus-visible) {
+  outline-offset: 5px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :where(:focus-visible) {
+    transition: outline-offset .2s ease;
+  }
+  :where(:not(:active):focus-visible) {
+    transition-duration: .25s;
+  }
+}

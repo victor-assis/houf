@@ -1,0 +1,20 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compileOnSave": false,
+  "files": [],
+  "references": [
+    {
+      "path": "./packages/tools"
+    }
+  ],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@hollom/linters": ["packages/lintrers"],
+      "@hollom/linters/*": ["packages/lintrers/*"],
+      "@hollom/tokens/*": ["packages/tokens/*"],
+      "@hollom/styles": ["packages/styles/src/styles.scss"],
+      "@hollom/tools": ["packages/tools/src"],
+    }
+  }
+}

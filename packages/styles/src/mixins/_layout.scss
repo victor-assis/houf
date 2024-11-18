@@ -1,0 +1,340 @@
+/*
+** Hollom styles - Containers Mixins
+*/
+@use 'tokens' as tokens;
+@use '../functions/list' as *;
+@use '../functions/tokens-handler' as *;
+@use '../functions/unit-transform' as *;
+@use './media-query' as *;
+@use 'sass:meta';
+@use 'sass:list';
+@use 'sass:map';
+
+$tokens-map: meta.module-variables(tokens);
+
+/// Gera containers responsivos
+/// @group module-internal
+/// @example scss
+///   .hollom-container {
+///     @include create-container();
+///   }
+///   /* output:
+///   .hollom-container {
+///     ...
+///     @media (min-width: 48rem){}
+///     @media (min-width: 64rem){}
+///     @media (min-width: 80rem){}
+///     @media (min-width: 100rem){}
+///   }
+/// */
+@mixin create-container() {
+  $containers: map-by-string($tokens-map, 'hollom-layout-container');
+  $padding: map-by-string($tokens-map, 'hollom-layout-padding');
+
+  max-width: list.nth(map.values($containers), 1);
+  padding: 0 list.nth(map.values($padding), 1);
+
+  @each $key, $container in $containers {
+    $breakpoint: string-key-split($key, '-', 4);
+
+    @if (
+      list.index(
+          map.keys($containers),
+          'hollom-layout-container-#{$breakpoint}'
+        ) !=
+        1
+    ) {
+      @include media-q($from: $breakpoint, $media-type: 'screen') {
+        max-width: $container;
+        padding: 0
+          var(
+            --hollom_layout_padding_#{$breakpoint},
+            map.get($padding, 'hollom-layout-padding-#{$breakpoint}')
+          );
+      }
+    }
+
+    &-#{$breakpoint} {
+      @each $key, $container-second in $containers {
+        $breakpoint-second: string-key-split($key, '-', 4);
+
+        @if (
+          list.index(
+              map.keys($containers),
+              'hollom-layout-container-#{$breakpoint}'
+            ) >=
+            list.index(
+              map.keys($containers),
+              'hollom-layout-container-#{$breakpoint-second}'
+            )
+        ) {
+          @include media-q($from: $breakpoint-second, $media-type: 'screen') {
+            max-width: $container-second;
+            padding: 0
+              var(
+                --hollom_layout_padding_#{$breakpoint},
+                map.get($padding, 'hollom-layout-padding-#{$breakpoint-second}')
+              );
+          }
+        }
+      }
+    }
+  }
+}
+
+/// Gera containers responsivos com o mesmo padding para todos os lados
+/// @group module-internal
+/// @todo renomear ou remover e usar os helpers de padding
+/// @example scss
+///   .hollom-container-fluid {
+///     @include create-container-fluid();
+///   }
+///   /* output:
+///   .hollom-container-fluid {
+///     ...
+///     @media (min-width: 48rem){}
+///     @media (min-width: 64rem){}
+///     @media (min-width: 80rem){}
+///     @media (min-width: 100rem){}
+///   }
+/// */
+@mixin create-container-fluid() {
+  $paddings: map-by-string($tokens-map, 'hollom-layout-padding');
+
+  @each $key, $padding in $paddings {
+    $breakpoint: string-key-split($key, '-', 4);
+
+    @include media-q($from: $breakpoint, $media-type: 'screen') {
+      $paddingValue: var(--hollom_layout_padding_#{$breakpoint}, $padding);
+
+      padding-left: $paddingValue;
+      padding-right: $paddingValue;
+    }
+  }
+}
+
+/// Gera rows responsivos. A quantidade de colunas é baseada nos tokens
+/// $hollom_layout_columns
+/// @group module-internal
+/// @example scss
+///   .hollom-row {
+///     @include create-row();
+///   }
+///   /* output:
+///   .hollom-row {
+///     ...
+///     @media (min-width: 48rem){}
+///     @media (min-width: 64rem){}
+///     @media (min-width: 80rem){}
+///     @media (min-width: 100rem){}
+///   }
+/// */
+@mixin create-row() {
+  $rows: map-by-string($tokens-map, 'hollom-layout-columns');
+  $gutters: map-by-string($tokens-map, 'hollom-layout-gutter');
+  $minGutterKey: --#{str-replace(list.nth(map.keys($gutters), 1), '-', '_')};
+
+  gap: var($minGutterKey, #{get-min($gutters)}rem);
+  grid-template-columns: repeat(get-min($rows), minmax(0, 1fr));
+
+  @each $key, $row in $rows {
+    $breakpoint: string-key-split($key, '-', 4);
+
+    @if (
+      list.index(map.keys($rows), 'hollom-layout-columns-#{$breakpoint}') != 1
+    ) {
+      @include media-q($from: $breakpoint, $media-type: 'screen') {
+        gap: var(
+          --hollom_layout_gutter_#{$breakpoint},
+          map.get($gutters, 'hollom-layout-gutter-#{$breakpoint}')
+        );
+        grid-template-columns: repeat($row, minmax(0, 1fr));
+      }
+    }
+  }
+}
+
+/// Gera rows responsivos com número máximo de colunas. A quantidade de colunas
+/// é baseada nos tokens $hollom_layout_columns
+/// @group module-internal
+/// @example scss
+///   .hollom-row {
+///     @include create-row-max();
+///   }
+///   /* output: .hollom-row-8 {...} .hollom-row-fixed-4 {...} */
+@mixin create-row-max() {
+  $rows: map-by-string($tokens-map, 'hollom-layout-columns');
+  $gutters: map-by-string($tokens-map, 'hollom-layout-gutter');
+  $minGutterKey: --#{str-replace(list.nth(map.keys($gutters), 1), '-', '_')};
+
+  @each $key, $row in $rows {
+    // gera .hollom-row-4 .hollom-row-8
+    @if (get-max($rows) > $row) {
+      &-#{$row} {
+        gap: var($minGutterKey, #{get-min($gutters)}rem);
+        grid-template-columns: repeat(get-min($rows), minmax(0, 1fr));
+
+        @each $key, $row-point in $rows {
+          $breakpoint: string-key-split($key, '-', 4);
+
+          @if (
+            ($row-point <= $row) and
+              (
+                list.index(
+                    map.keys($rows),
+                    'hollom-layout-columns-#{$breakpoint}'
+                  ) !=
+                  1
+              )
+          ) {
+            @include media-q($from: $breakpoint, $media-type: 'screen') {
+              gap: var(
+                --hollom_layout_gutter_#{$breakpoint},
+                map.get($gutters, 'hollom-layout-gutter-#{$breakpoint}')
+              );
+              grid-template-columns: repeat($row-point, minmax(0, 1fr));
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/// Gera rows não responsivos, com número fixo de colunas. A quantidade de
+/// colunas é baseada nos tokens $hollom_layout_columns
+/// @group module-internal
+/// @example scss
+///   .hollom-row {
+///     @include create-row-fixed();
+///   }
+///   /* output: .hollom-row-fixed-12 {...} .hollom-row-fixed-8 {...} ... */
+@mixin create-row-fixed() {
+  $rows: map-by-string($tokens-map, 'hollom-layout-columns');
+  $rowList: list-remove-duplicate(map.values($rows));
+  $gutters: map-by-string($tokens-map, 'hollom-layout-gutter');
+  $minGutterKey: --#{str-replace(list.nth(map.keys($gutters), 1), '-', '_')};
+
+  // gera .hollom-row-fixed-4, hollom-row-fixed-8...
+  @each $row in $rowList {
+    &-fixed-#{$row} {
+      $gutters: map-by-string($tokens-map, 'hollom-layout-gutter');
+
+      gap: var($minGutterKey, #{get-min($gutters)}rem);
+      grid-template-columns: repeat($row, minmax(0, 1fr));
+
+      // cria media-query para gap responsivo, baseado em tokens
+      @each $key, $gutter in $gutters {
+        $breakpoint: string-key-split($key, '-', 4);
+
+        // ignora tamanho xs, pois esse já é padrão
+        @if (
+          list.index(map.keys($rows), 'hollom-layout-columns-#{$breakpoint}') != 1
+        ) {
+          @include media-q($from: $breakpoint, $media-type: 'screen') {
+            gap: var(--hollom_layout_gutter_#{$breakpoint}, $gutter);
+          }
+        }
+      }
+    }
+  }
+}
+
+/// Gera colunas e offsets responsivos e não responsivos
+/// @group module-internal
+/// @example scss
+///   .hollom-col {
+///     @include create-columns();
+///   }
+///   /* output:
+///   .hollom-column-1,
+///     [class*='hollom-row-fixed'] .hollom-column-1 {
+///     ...
+///     @media (min-width: 48rem){}
+///     @media (min-width: 64rem){}
+///     @media (min-width: 80rem){}
+///     @media (min-width: 100rem){}
+///   }
+/// */
+@mixin create-columns() {
+  $columns: map-by-string($tokens-map, 'hollom-layout-columns');
+
+  // gera hollom-col-[1,2,3...] hollom-col-offset-[1,2,3...]
+  @for $i from 1 through get-max($columns) {
+    &-#{$i},
+    [class*='hollom-row-fixed'] &-#{$i} {
+      grid-column-end: span $i;
+    }
+
+    &-offset-#{$i} {
+      @if $i < get-max($columns) {
+        grid-column-start: $i;
+      } @else {
+        grid-column-start: $i;
+      }
+    }
+
+    // gera as media-queries para as colunas responsivas para terem a mesma
+    // proporção em todas as resoluções
+    @each $key, $column in map-reverse($columns) {
+      $breakpoint: string-key-split($key, '-', 4);
+
+      @if $i >
+        $column and
+        map-next-value($columns, 'hollom-layout-columns-#{$breakpoint}')
+      {
+        @include media-q($until: $breakpoint, $media-type: 'screen') {
+          &-#{$i} {
+            grid-column-end: span $column;
+          }
+
+          &-offset-#{$i} {
+            grid-column-start: $column;
+          }
+        }
+      }
+    }
+  }
+
+  // gera hollom-col{-offset}-[xs,sm,md...]-[1,2,3...]
+  @each $key, $column in $columns {
+    $breakpoint: string-key-split($key, '-', 4);
+
+    @include media-q($from: $breakpoint, $media-type: 'screen') {
+      @for $i from 1 through $column {
+        &-#{$breakpoint}-#{$i},
+        [class*='hollom-row-fixed'] &-#{$breakpoint}-#{$i} {
+          grid-column-end: span $i;
+        }
+
+        &-offset-#{$breakpoint}-#{$i},
+        [class*='hollom-row-fixed'] &-offset-#{$breakpoint}-#{$i} {
+          grid-column-start: $i;
+        }
+      }
+    }
+  }
+}
+
+/// Gera gutters não responsivos
+/// @group module-internal
+/// @example scss
+///   .hollom-gutters {
+///     @include create-gutters();
+///   }
+///   /* output:
+///   .hollom-gutters-sm {
+///     gap: var(--hollom_layout_gutter_sm, 1rem);
+///   }*/
+@mixin create-gutters() {
+  $gutters: map-by-string($tokens-map, 'hollom-layout-gutter');
+
+  // gera &-(xs/sm/md/lg/xl)
+  @each $key, $gutter in $gutters {
+    &-#{string-key-split($key, '-', 4)} {
+      $breakpoint: string-key-split($key, '-', 4);
+
+      gap: var(--hollom_layout_gutter_#{$breakpoint}, #{$gutter}) !important;
+    }
+  }
+}

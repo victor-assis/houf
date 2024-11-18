@@ -1,0 +1,10 @@
+{
+  "package": {
+    "title": "Hollom styles",
+    "description": "Hollom design system styles"
+  },
+  "groups": {
+    "undefined": "General",
+    "components": "Components"
+  }
+}

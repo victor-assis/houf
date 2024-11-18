@@ -1,0 +1,7 @@
+{
+  "color": {
+    "primary": {
+      "brand": { "value": "{color.blue.500.value}", "theme": "black" }
+    }
+  }
+}

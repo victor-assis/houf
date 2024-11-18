@@ -1,0 +1,79 @@
+@layer system, base, utilities, components;
+
+@import './global/_vars.css' layer(system.props);
+
+@import './global/focus.css' layer(base);
+
+@import './utilities/scrolling.css' layer(utilities);
+
+@import './components/nav.css' layer(components);
+@import './components/brand.css' layer(components);
+@import './components/link.css' layer(components);
+@import './components/aside.css' layer(components);
+@import './components/button.css' layer(components);
+@import './components/button-list.css' layer(components);
+@import './components/theme-toggle.css' layer(components);
+
+html {
+  /* color-scheme: light dark; */
+  background: var(--surface-document);
+  color: var(--text-1);
+}
+
+body {
+  font-family: "Roboto", system-ui;
+  display: grid;
+  gap: 2rem;
+  margin: 0;
+  width: 100vw;
+  min-height: 100vh;
+  grid-template-rows: auto 1fr;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Google Sans", system-ui;
+  text-wrap: balance;
+}
+
+p {
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+
+@media (prefers-reduced-motion: no-preference) {
+  #app {
+    view-transition-name: app;
+  }
+}
+
+header {
+  background: var(--surface-document);
+  z-index: 1;
+  position: sticky;
+  top: 0;
+
+  .menu-toggle {
+    display: none;
+
+    @media (width <= 768px) {
+      display: block;
+    }
+  }
+}
+
+main {
+  display: grid;
+  gap: 2rem 0;
+  z-index: 0;
+  grid-template-columns: var(--sidebar-width) 1fr;
+  width: 100vw;
+
+  @media (width <= 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.app {
+  padding: 0 1rem;
+}
