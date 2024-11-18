@@ -1,0 +1,20 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compileOnSave": false,
+  "files": [],
+  "references": [
+    {
+      "path": "./packages/tools"
+    }
+  ],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@houf/linters": ["packages/lintrers"],
+      "@houf/linters/*": ["packages/lintrers/*"],
+      "@houf/tokens/*": ["packages/tokens/*"],
+      "@houf/styles": ["packages/styles/src/styles.scss"],
+      "@houf/tools": ["packages/tools/src"],
+    }
+  }
+}

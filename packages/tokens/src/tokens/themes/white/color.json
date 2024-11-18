@@ -1,0 +1,7 @@
+{
+  "color": {
+    "gray": {
+      "brand" : { "value": "{color.gray.light.value}", "theme": "white" }
+    }
+  }
+}

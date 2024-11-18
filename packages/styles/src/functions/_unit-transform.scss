@@ -1,0 +1,39 @@
+/*
+** styles - Funções de Conversão de Unidades
+*/
+@use 'sass:math';
+@use 'sass:meta';
+
+/// convert valores para rem
+/// @param {Number} $number - Número para converter
+/// @param {context} $context - Base para a conversão
+/// @return {Number} - valor em rem
+/// @example scss - Retorna um valor convertido para rem
+///   margin: rem(32);
+///   // margin: 2rem
+///
+@function rem($number, $context: 16) {
+  @if math.is-unitless($number) == false {
+    $number: strip-unit($number);
+  }
+
+  @return math.div($number, $context) * 1rem;
+}
+
+/// Remove a unidade de um numero
+/// @param {Number} $number - Número para remover a unidade
+/// @return {Number} - número sem unidade
+/// @example scss - Remove a unidade de um número
+///   $margin: 32px;
+///   div {
+///    margin: rem(strip-unit($margin), 16);
+///   }
+///   // margin: 2rem
+///
+@function strip-unit($number) {
+  @if meta.type-of($number) == 'number' and math.is-unitless($number) == false {
+    @return math.div($number, ($number * 0 + 1));
+  }
+
+  @return $number;
+}

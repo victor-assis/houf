@@ -1,0 +1,14 @@
+@import "sun-and-moon.css";
+
+.theme-toggle {
+  --icon-fill: var(--text-2);
+  --icon-fill-hover: var(--text-1);
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+}

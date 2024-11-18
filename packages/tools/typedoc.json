@@ -1,0 +1,6 @@
+{
+  "nome": "Houf tools",
+  "entryPoints": ["packages/tools/src/index.ts"],
+  "tsconfig": "packages/tools/tsconfig.lib.json",
+  "json": "dist/docs/toolsdoc.json"
+}

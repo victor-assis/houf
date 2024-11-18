@@ -1,0 +1,340 @@
+/*
+** styles - Containers Mixins
+*/
+@use 'tokens' as tokens;
+@use '../functions/list' as *;
+@use '../functions/tokens-handler' as *;
+@use '../functions/unit-transform' as *;
+@use './media-query' as *;
+@use 'sass:meta';
+@use 'sass:list';
+@use 'sass:map';
+
+$tokens-map: meta.module-variables(tokens);
+
+/// Gera containers responsivos
+/// @group module-internal
+/// @example scss
+///   .houf-container {
+///     @include create-container();
+///   }
+///   /* output:
+///   .houf-container {
+///     ...
+///     @media (min-width: 48rem){}
+///     @media (min-width: 64rem){}
+///     @media (min-width: 80rem){}
+///     @media (min-width: 100rem){}
+///   }
+/// */
+@mixin create-container() {
+  $containers: map-by-string($tokens-map, 'houf-layout-container');
+  $padding: map-by-string($tokens-map, 'houf-layout-padding');
+
+  max-width: list.nth(map.values($containers), 1);
+  padding: 0 list.nth(map.values($padding), 1);
+
+  @each $key, $container in $containers {
+    $breakpoint: string-key-split($key, '-', 4);
+
+    @if (
+      list.index(
+          map.keys($containers),
+          'houf-layout-container-#{$breakpoint}'
+        ) !=
+        1
+    ) {
+      @include media-q($from: $breakpoint, $media-type: 'screen') {
+        max-width: $container;
+        padding: 0
+          var(
+            --houf_layout_padding_#{$breakpoint},
+            map.get($padding, 'houf-layout-padding-#{$breakpoint}')
+          );
+      }
+    }
+
+    &-#{$breakpoint} {
+      @each $key, $container-second in $containers {
+        $breakpoint-second: string-key-split($key, '-', 4);
+
+        @if (
+          list.index(
+              map.keys($containers),
+              'houf-layout-container-#{$breakpoint}'
+            ) >=
+            list.index(
+              map.keys($containers),
+              'houf-layout-container-#{$breakpoint-second}'
+            )
+        ) {
+          @include media-q($from: $breakpoint-second, $media-type: 'screen') {
+            max-width: $container-second;
+            padding: 0
+              var(
+                --houf_layout_padding_#{$breakpoint},
+                map.get($padding, 'houf-layout-padding-#{$breakpoint-second}')
+              );
+          }
+        }
+      }
+    }
+  }
+}
+
+/// Gera containers responsivos com o mesmo padding para todos os lados
+/// @group module-internal
+/// @todo renomear ou remover e usar os helpers de padding
+/// @example scss
+///   .houf-container-fluid {
+///     @include create-container-fluid();
+///   }
+///   /* output:
+///   .houf-container-fluid {
+///     ...
+///     @media (min-width: 48rem){}
+///     @media (min-width: 64rem){}
+///     @media (min-width: 80rem){}
+///     @media (min-width: 100rem){}
+///   }
+/// */
+@mixin create-container-fluid() {
+  $paddings: map-by-string($tokens-map, 'houf-layout-padding');
+
+  @each $key, $padding in $paddings {
+    $breakpoint: string-key-split($key, '-', 4);
+
+    @include media-q($from: $breakpoint, $media-type: 'screen') {
+      $paddingValue: var(--houf_layout_padding_#{$breakpoint}, $padding);
+
+      padding-left: $paddingValue;
+      padding-right: $paddingValue;
+    }
+  }
+}
+
+/// Gera rows responsivos. A quantidade de colunas é baseada nos tokens
+/// $houf_layout_columns
+/// @group module-internal
+/// @example scss
+///   .houf-row {
+///     @include create-row();
+///   }
+///   /* output:
+///   .houf-row {
+///     ...
+///     @media (min-width: 48rem){}
+///     @media (min-width: 64rem){}
+///     @media (min-width: 80rem){}
+///     @media (min-width: 100rem){}
+///   }
+/// */
+@mixin create-row() {
+  $rows: map-by-string($tokens-map, 'houf-layout-columns');
+  $gutters: map-by-string($tokens-map, 'houf-layout-gutter');
+  $minGutterKey: --#{str-replace(list.nth(map.keys($gutters), 1), '-', '_')};
+
+  gap: var($minGutterKey, #{get-min($gutters)}rem);
+  grid-template-columns: repeat(get-min($rows), minmax(0, 1fr));
+
+  @each $key, $row in $rows {
+    $breakpoint: string-key-split($key, '-', 4);
+
+    @if (
+      list.index(map.keys($rows), 'houf-layout-columns-#{$breakpoint}') != 1
+    ) {
+      @include media-q($from: $breakpoint, $media-type: 'screen') {
+        gap: var(
+          --houf_layout_gutter_#{$breakpoint},
+          map.get($gutters, 'houf-layout-gutter-#{$breakpoint}')
+        );
+        grid-template-columns: repeat($row, minmax(0, 1fr));
+      }
+    }
+  }
+}
+
+/// Gera rows responsivos com número máximo de colunas. A quantidade de colunas
+/// é baseada nos tokens $houf_layout_columns
+/// @group module-internal
+/// @example scss
+///   .houf-row {
+///     @include create-row-max();
+///   }
+///   /* output: .houf-row-8 {...} .houf-row-fixed-4 {...} */
+@mixin create-row-max() {
+  $rows: map-by-string($tokens-map, 'houf-layout-columns');
+  $gutters: map-by-string($tokens-map, 'houf-layout-gutter');
+  $minGutterKey: --#{str-replace(list.nth(map.keys($gutters), 1), '-', '_')};
+
+  @each $key, $row in $rows {
+    // gera .houf-row-4 .houf-row-8
+    @if (get-max($rows) > $row) {
+      &-#{$row} {
+        gap: var($minGutterKey, #{get-min($gutters)}rem);
+        grid-template-columns: repeat(get-min($rows), minmax(0, 1fr));
+
+        @each $key, $row-point in $rows {
+          $breakpoint: string-key-split($key, '-', 4);
+
+          @if (
+            ($row-point <= $row) and
+              (
+                list.index(
+                    map.keys($rows),
+                    'houf-layout-columns-#{$breakpoint}'
+                  ) !=
+                  1
+              )
+          ) {
+            @include media-q($from: $breakpoint, $media-type: 'screen') {
+              gap: var(
+                --houf_layout_gutter_#{$breakpoint},
+                map.get($gutters, 'houf-layout-gutter-#{$breakpoint}')
+              );
+              grid-template-columns: repeat($row-point, minmax(0, 1fr));
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/// Gera rows não responsivos, com número fixo de colunas. A quantidade de
+/// colunas é baseada nos tokens $houf_layout_columns
+/// @group module-internal
+/// @example scss
+///   .houf-row {
+///     @include create-row-fixed();
+///   }
+///   /* output: .houf-row-fixed-12 {...} .houf-row-fixed-8 {...} ... */
+@mixin create-row-fixed() {
+  $rows: map-by-string($tokens-map, 'houf-layout-columns');
+  $rowList: list-remove-duplicate(map.values($rows));
+  $gutters: map-by-string($tokens-map, 'houf-layout-gutter');
+  $minGutterKey: --#{str-replace(list.nth(map.keys($gutters), 1), '-', '_')};
+
+  // gera .houf-row-fixed-4, houf-row-fixed-8...
+  @each $row in $rowList {
+    &-fixed-#{$row} {
+      $gutters: map-by-string($tokens-map, 'houf-layout-gutter');
+
+      gap: var($minGutterKey, #{get-min($gutters)}rem);
+      grid-template-columns: repeat($row, minmax(0, 1fr));
+
+      // cria media-query para gap responsivo, baseado em tokens
+      @each $key, $gutter in $gutters {
+        $breakpoint: string-key-split($key, '-', 4);
+
+        // ignora tamanho xs, pois esse já é padrão
+        @if (
+          list.index(map.keys($rows), 'houf-layout-columns-#{$breakpoint}') != 1
+        ) {
+          @include media-q($from: $breakpoint, $media-type: 'screen') {
+            gap: var(--houf_layout_gutter_#{$breakpoint}, $gutter);
+          }
+        }
+      }
+    }
+  }
+}
+
+/// Gera colunas e offsets responsivos e não responsivos
+/// @group module-internal
+/// @example scss
+///   .houf-col {
+///     @include create-columns();
+///   }
+///   /* output:
+///   .houf-column-1,
+///     [class*='houf-row-fixed'] .houf-column-1 {
+///     ...
+///     @media (min-width: 48rem){}
+///     @media (min-width: 64rem){}
+///     @media (min-width: 80rem){}
+///     @media (min-width: 100rem){}
+///   }
+/// */
+@mixin create-columns() {
+  $columns: map-by-string($tokens-map, 'houf-layout-columns');
+
+  // gera houf-col-[1,2,3...] houf-col-offset-[1,2,3...]
+  @for $i from 1 through get-max($columns) {
+    &-#{$i},
+    [class*='houf-row-fixed'] &-#{$i} {
+      grid-column-end: span $i;
+    }
+
+    &-offset-#{$i} {
+      @if $i < get-max($columns) {
+        grid-column-start: $i;
+      } @else {
+        grid-column-start: $i;
+      }
+    }
+
+    // gera as media-queries para as colunas responsivas para terem a mesma
+    // proporção em todas as resoluções
+    @each $key, $column in map-reverse($columns) {
+      $breakpoint: string-key-split($key, '-', 4);
+
+      @if $i >
+        $column and
+        map-next-value($columns, 'houf-layout-columns-#{$breakpoint}')
+      {
+        @include media-q($until: $breakpoint, $media-type: 'screen') {
+          &-#{$i} {
+            grid-column-end: span $column;
+          }
+
+          &-offset-#{$i} {
+            grid-column-start: $column;
+          }
+        }
+      }
+    }
+  }
+
+  // gera houf-col{-offset}-[xs,sm,md...]-[1,2,3...]
+  @each $key, $column in $columns {
+    $breakpoint: string-key-split($key, '-', 4);
+
+    @include media-q($from: $breakpoint, $media-type: 'screen') {
+      @for $i from 1 through $column {
+        &-#{$breakpoint}-#{$i},
+        [class*='houf-row-fixed'] &-#{$breakpoint}-#{$i} {
+          grid-column-end: span $i;
+        }
+
+        &-offset-#{$breakpoint}-#{$i},
+        [class*='houf-row-fixed'] &-offset-#{$breakpoint}-#{$i} {
+          grid-column-start: $i;
+        }
+      }
+    }
+  }
+}
+
+/// Gera gutters não responsivos
+/// @group module-internal
+/// @example scss
+///   .houf-gutters {
+///     @include create-gutters();
+///   }
+///   /* output:
+///   .houf-gutters-sm {
+///     gap: var(--houf_layout_gutter_sm, 1rem);
+///   }*/
+@mixin create-gutters() {
+  $gutters: map-by-string($tokens-map, 'houf-layout-gutter');
+
+  // gera &-(xs/sm/md/lg/xl)
+  @each $key, $gutter in $gutters {
+    &-#{string-key-split($key, '-', 4)} {
+      $breakpoint: string-key-split($key, '-', 4);
+      // stylelint-disable-next-line declaration-no-important -- helper
+      gap: var(--houf_layout_gutter_#{$breakpoint}, #{$gutter}) !important;
+    }
+  }
+}

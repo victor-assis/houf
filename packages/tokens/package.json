@@ -1,0 +1,17 @@
+{
+  "name": "@houf/tokens",
+  "description": "Houf Design Tokens",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "./tokens-themes.js",
+  "module": "./tokens-themes.mjs",
+  "typings": "./tokens-themes.d.ts",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "tag": "latest",
+    "access": "public"
+  },
+  "devDependencies": {
+    "style-dictionary": "^4.2.0"
+  }
+}

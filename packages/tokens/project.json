@@ -1,0 +1,36 @@
+{
+  "name": "tokens",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/tokens/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "node packages/tokens/src/build.js",
+          "shx cp packages/tokens/package.json dist/tokens"
+        ],
+        "parallel": false
+      }
+    },
+    "release": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "semantic-release --extends=./packages/tokens/.release.json"
+        ]
+      }
+    },
+    "zip": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "shx mkdir -p tmp",
+          "bestzip tmp/tokens.zip dist/tokens/*"
+        ]
+      }
+    }
+  }
+}

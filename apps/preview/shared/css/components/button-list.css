@@ -1,0 +1,15 @@
+button-list {
+  display: grid;
+  gap: 1rem;
+  grid-auto-flow: column;
+}
+
+.icon-button-list {
+  display: flex;
+  justify-content: flex-end;
+  margin-left: auto;
+
+  & > button {
+    margin-inline-start: 0.5rem;
+  }
+}

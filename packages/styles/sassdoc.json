@@ -1,0 +1,10 @@
+{
+  "package": {
+    "title": "Houf styles",
+    "description": "Houf design system styles"
+  },
+  "groups": {
+    "undefined": "General",
+    "components": "Components"
+  }
+}

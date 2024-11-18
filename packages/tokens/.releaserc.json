@@ -1,0 +1,31 @@
+{
+  "extends": "semantic-release-monorepo",
+  "branches": [
+    "master", "next", "+([0-9])?(.{+([0-9]),x}).x",
+    {"name": "rc", "prerelease": true}
+  ],
+  "plugins": [
+    "@semantic-release/commit-analyzer",
+    ["@semantic-release/release-notes-generator", {
+      "config": "cz-conventional-changelog"
+    }],
+    ["@semantic-release/changelog",
+      {
+        "changelogFile": "CHANGELOG.md"
+      }
+    ],
+    ["@semantic-release/github", {
+      "assets": [
+        {"path": "../../tmp/houf-tokens.zip", "label": "Tokens distribution"}
+      ]
+    }],
+    ["@semantic-release/npm", {
+      "pkgRoot": "../../dist/tokens",
+      "tarballDir": "../../dist/tokens"
+    }],
+    ["@semantic-release/git", {
+      "assets": ["CHANGELOG.md"],
+      "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+    }]
+  ]
+}

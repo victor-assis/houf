@@ -1,0 +1,13 @@
+{
+  "name": "@houf/styles",
+  "version": "1.0.0",
+  "main": "css/styles.css",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "tag": "latest",
+    "access": "public"
+  },
+  "devDependencies": {
+    "sass": "^1.81.0"
+  }
+}

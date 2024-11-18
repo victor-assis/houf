@@ -1,0 +1,32 @@
+nav {
+  block-size: var(--body-rails);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0 1rem;
+
+  & > :is(:first-child, :last-child) {
+    justify-self: center;
+  }
+
+  @media (width >= 500px) {
+    & > icon-button-list > button[search] {
+      display: none;
+    }
+  }
+
+  @media (width <= 500px) {
+    & > search {
+      inline-size: 0;
+      overflow: hidden;
+    }
+  }
+
+  @media (width <= 350px) {
+    & > brand {
+      inline-size: 0;
+      overflow: hidden;
+    }
+  }
+}

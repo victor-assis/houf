@@ -1,0 +1,31 @@
+{
+  "extends": "semantic-release-monorepo",
+  "branches": [
+    "master", "next", "+([0-9])?(.{+([0-9]),x}).x",
+    {"name": "rc", "prerelease": true}
+  ],
+  "plugins": [
+    "@semantic-release/commit-analyzer",
+    ["@semantic-release/release-notes-generator", {
+      "config": "cz-conventional-changelog"
+    }],
+    ["@semantic-release/changelog",
+      {
+        "changelogFile": "packages/styles/CHANGELOG.md"
+      }
+    ],
+    ["@semantic-release/github", {
+      "assets": [
+        {"path": "../../tmp/houf-style.zip", "label": "Style distribution"}
+      ]
+    }],
+    ["@semantic-release/npm", {
+      "pkgRoot": "../../dist/style",
+      "tarballDir": "../../dist/style"
+    }],
+    ["@semantic-release/git", {
+      "assets": ["CHANGELOG.md"],
+      "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+    }]
+  ]
+}
