@@ -16,7 +16,7 @@
     ],
     ["@semantic-release/github", {
       "assets": [
-        {"path": "../../tmp/houf-tokens.zip", "label": "Tokens distribution"}
+        {"path": "../../tmp/hollow-tokens.zip", "label": "Tokens distribution"}
       ]
     }],
     ["@semantic-release/npm", {

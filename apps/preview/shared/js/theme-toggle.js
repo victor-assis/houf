@@ -35,7 +35,7 @@ reflectPreference()
 
 export function onLoadThemeToggle() {
   reflectPreference()
-  document.querySelector('#theme-toggle').addEventListener('click', onClick)
+  document.querySelector('#theme-toggle')?.addEventListener('click', onClick)
 }
 
 window

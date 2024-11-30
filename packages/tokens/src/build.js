@@ -40,7 +40,7 @@ const getConfig = theme => {
     source: tokensSource(theme),
     platforms: {
       css_scss: {
-        prefix: 'houf',
+        prefix: 'hollow',
         transformGroup: 'customCss',
         buildPath: `dist/tokens/${theme}/`,
         files: [
@@ -48,7 +48,7 @@ const getConfig = theme => {
             destination: 'tokens.css',
             format: 'custom/css',
             options: {
-              selector: `:root[class*="houf-theme-${theme}"]`,
+              selector: `:root[class*="hollow-theme-${theme}"]`,
               theme
             },
             filter: token => token.theme === theme
@@ -69,7 +69,7 @@ const getConfig = theme => {
         ]
       },
       js: {
-        prefix: 'houf',
+        prefix: 'hollow',
         transformGroup: 'customJs',
         buildPath: `dist/tokens/${theme}/`,
         files: [
@@ -110,7 +110,7 @@ const getConfig = theme => {
         ]
       },
       json: {
-        prefix: 'houf',
+        prefix: 'hollow',
         buildPath: `dist/tokens/${theme}/`,
         files: [
           {
@@ -172,7 +172,7 @@ const build = async (sd) => {
   //   source: tokensSource('white'),
   //   platforms: {
   //     css_fonts: {
-  //       prefix: 'houf',
+  //       prefix: 'hollow',
   //       transformGroup: 'customed',
   //       buildPath: 'dist/tokens/',
   //       files: Object.keys(sd.tokens.text).map(fonts => ({

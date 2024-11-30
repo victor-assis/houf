@@ -14,7 +14,7 @@ export const cssFormatter = (dictionary, config) => {
     output += `${Array.from(fontsArray).join('\n')}\n\n`;
   }
 
-  output += `:root:not(class="houf-theme-${config.theme}") {\n`;
+  output += `:root:not(class="hollow-theme-${config.theme}") {\n`;
 
   dictionary.allTokens.forEach(({ value, name, attributes }) => {
     if (attributes.category === 'color' && name.includes('gradient') && name.includes('chart')) {

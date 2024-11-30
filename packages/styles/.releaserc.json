@@ -16,7 +16,7 @@
     ],
     ["@semantic-release/github", {
       "assets": [
-        {"path": "../../tmp/houf-style.zip", "label": "Style distribution"}
+        {"path": "../../tmp/hollow-style.zip", "label": "Style distribution"}
       ]
     }],
     ["@semantic-release/npm", {

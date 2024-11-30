@@ -3,7 +3,7 @@ export const primitiveDocFormatter = () =>
   <html>
     <head>
       <meta charset="utf-8">
-      <title>Houf Design Tokens - Primitives</title>
+      <title>Hollow Design Tokens - Primitives</title>
       <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
@@ -20,7 +20,7 @@ export const themeDocFormatter = (sd) =>
   <html>
     <head>
       <meta charset="utf-8">
-      <title>Houf Design Tokens - Themes</title>
+      <title>Hollow Design Tokens - Themes</title>
       <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>

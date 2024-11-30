@@ -1,6 +1,6 @@
 {
-  "name": "@houf/tokens",
-  "description": "Houf Design Tokens",
+  "name": "@hollow/tokens",
+  "description": "Hollow Design Tokens",
   "version": "1.0.0",
   "type": "module",
   "main": "./tokens-themes.js",

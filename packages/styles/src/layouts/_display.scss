@@ -1,0 +1,9 @@
+/*
+** Hollow Styles Displays
+*/
+@use '../mixins/display' as *;
+
+/// @group module-display
+.holl-d {
+  @include create-display();
+}

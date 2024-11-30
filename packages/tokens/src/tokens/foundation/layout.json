@@ -1,0 +1,12 @@
+{
+  "layout": {
+    "breakpoints": {
+      "xs": {
+        "type": "layout",
+        "value": "320px",
+        "comment": "Extra small devices (portrait phones, less than 767px)",
+        "theme": "no-theme"
+      }
+    }
+  }
+}

@@ -25,8 +25,8 @@ const jsonFlat = (dictionary) => {
 
 export const jsModuleFlatFormatter = (dictionary) => {
   /**
-   * Created by Houf
-   * Do not edit directly. Generated using https://github.com/victor-assis/houf
+   * Created by Hollow
+   * Do not edit directly. Generated using https://github.com/victor-assis/hollow
    */
   return `module.exports = ${jsonFlat(dictionary)};`;
 };
@@ -41,8 +41,8 @@ export const jsModuleFlatFormatter = (dictionary) => {
 export const jsThemesFormatter = (file, type = 'cjs') => {
   let output = `
 /**
- * Created by Houf
- * Do not edit directly. Generated using https://github.com/victor-assis/houf
+ * Created by Hollow
+ * Do not edit directly. Generated using https://github.com/victor-assis/Hollow
  */
 `;
 
@@ -73,8 +73,8 @@ export const jsonThemesFormatter = (file) => {
 export const tsFormatterRef = (file) => {
   let output = `
 /**
- * Created by Houf
- * Do not edit directly. Generated using https://github.com/victor-assis/houf
+ * Created by Hollow
+ * Do not edit directly. Generated using https://github.com/victor-assis/hollow
  */
 `;
 

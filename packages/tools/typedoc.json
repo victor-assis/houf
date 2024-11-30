@@ -1,5 +1,5 @@
 {
-  "name": "Houf tools",
+  "name": "Hollow tools",
   "entryPoints": ["src/index.ts"],
   "tsconfig": "tsconfig.lib.json",
   "json": "../../dist/docs/tools/toolsdoc.json"

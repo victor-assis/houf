@@ -1,2 +1,2 @@
-# Houf Linters
+# Hollow Linters
 

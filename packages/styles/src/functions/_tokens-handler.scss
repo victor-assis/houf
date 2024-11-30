@@ -1,6 +1,3 @@
-/*
-** styles - Module Handler
-*/
 @use '../functions/unit-transform' as *;
 @use 'sass:string';
 @use 'sass:list';
@@ -13,7 +10,7 @@
 /// @param {String} $string - Texto para referencia do filtro
 /// @return {Map or Null} - Mapa com as variaveis do filtro
 /// @example scss
-///   $margins: ("top": "1rem", "right": "1.5rem", "bottom": "0.5rem", "left": "2rem");
+///   $margins: ("top": "1rem", "right": "1.5rem", "bottom": "0.5rem", "left": "2rem");Mapacomasvariaveisdofiltroscss$margins
 ///   $margin-top: map-by-string($margins, "top")
 ///   // $margin-top: ("top": "1rem")
 ///
@@ -47,7 +44,7 @@
 /// @example scss
 ///   $back: "background-color-red"
 ///   p {
-///     background-color: string-key-split($back, "-", 2);
+///     background-color: string-key-split($back, "-", 2);background-color
 ///   }
 ///   // background-color: red
 ///
@@ -71,9 +68,9 @@
 /// @param {Map} $map - Mapa de numeros
 /// @return {Number} - Maior numero
 /// @example scss
-///   $margins: ("top": "1rem", "right": "1.5rem", "bottom": "0.5rem", "left": "2rem");
+///   $margins: ("top": "1rem", "right": "1.5rem", "bottom": "0.5rem", "left": "2rem");Maiornumeroscss$margins
 ///   div {
-///     margin: get-max($margins)rem;
+///     margin: get-max($margins)rem;margin
 ///   }
 ///   // margin: 2rem
 ///
@@ -91,9 +88,9 @@
 /// @param {Map} $map - Mapa de numeros
 /// @return {Number} - Menor numero
 /// @example scss
-///   $margins: ("top": "1rem", "right": "1.5rem", "bottom": "0.5rem", "left": "2rem");
+///   $margins: ("top": "1rem", "right": "1.5rem", "bottom": "0.5rem", "left": "2rem");Menornumeroscss$margins
 ///   div {
-///     margin: get-min($margins)rem;
+///     margin: get-min($margins)rem;margin
 ///   }
 ///   // margin: 0.5rem
 ///
@@ -112,9 +109,9 @@
 /// @param {String} $string - Texto para referencia
 /// @return {Map or Null} - string | null
 /// @example scss
-///   $margins: ("top": "1rem", "right": "1.5rem", "bottom": "0.5rem", "left": "2rem");
+///   $margins: ("top": "1rem", "right": "1.5rem", "bottom": "0.5rem", "left": "2rem");stringnullscss$margins
 ///   div {
-///     margin: map.get($margins,map-next-value($margins, "top"));
+///     margin: map.get($margins,map-next-value($margins, "top"));margin
 ///   }
 ///   // margin: 1.5rem
 ///
@@ -133,9 +130,9 @@
 /// @param {String} $string - Texto para referencia
 /// @return {Map or String} - string | null
 /// @example scss
-///   $margins: ("top": "1rem", "right": "1.5rem", "bottom": "0.5rem", "left": "2rem");
+///   $margins: ("top": "1rem", "right": "1.5rem", "bottom": "0.5rem", "left": "2rem");stringnullscss$margins
 ///   div {
-///     margin: map.get($margins,map-prev-value($margins, "top"));
+///     margin: map.get($margins,map-prev-value($margins, "top"));margin
 ///   }
 ///   // margin: 1.5rem
 ///
@@ -153,7 +150,7 @@
 /// @param {Map} $map - Mapa para inverter
 /// @return {Map or Null} - Map | null
 /// @example scss
-///   $margins: ("top": "1rem", "right": "1.5rem", "bottom": "0.5rem", "left": "2rem");
+///   $margins: ("top": "1rem", "right": "1.5rem", "bottom": "0.5rem", "left": "2rem");Mapnullscss$margins
 ///   $reverse: map-reverse($margins)
 ///   // $reverse:  ("left": "2rem", "bottom": "0.5rem", "right": "1.5rem", "top": "1rem")
 ///
@@ -187,7 +184,7 @@
 /// @param {String} $search - substring para substituir
 /// @param {String} $replace ('') - novo valor
 /// @return {String} - string atualizada
-/// @example str-reclace(houf-padding-xs, '-', '_') // -> houf_padding_xs
+/// @example str-reclace(hollow-padding-xs, '-', '_') // -> hollow_padding_xs
 ///
 @function str-replace($string, $search, $replace: '') {
   $index: str-index($string, $search);

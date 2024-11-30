@@ -1,7 +1,7 @@
 {
   "color": {
-    "gray": {
-      "brand": { "value": "{color.gray.dark.value}", "theme": "black" }
+    "primary": {
+      "brand": { "value": "{color.blue.500.value}", "theme": "black" }
     }
   }
 }

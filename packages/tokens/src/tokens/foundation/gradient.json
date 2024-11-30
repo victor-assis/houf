@@ -1,0 +1,14 @@
+{
+  "gradient": {
+    "direction": {
+      "right": {
+        "type": "gradient",
+        "value": {
+          "style": "0",
+          "start": { "x": 0.0, "y": 0.5 },
+          "end": { "x": 1.0, "y": 0.5 }
+        }
+      }
+    }
+  }
+}

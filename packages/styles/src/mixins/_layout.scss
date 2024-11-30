@@ -1,5 +1,5 @@
 /*
-** styles - Containers Mixins
+** Hollow styles - Containers Mixins
 */
 @use 'tokens' as tokens;
 @use '../functions/list' as *;
@@ -15,11 +15,11 @@ $tokens-map: meta.module-variables(tokens);
 /// Gera containers responsivos
 /// @group module-internal
 /// @example scss
-///   .houf-container {
+///   .hollow-container {
 ///     @include create-container();
 ///   }
 ///   /* output:
-///   .houf-container {
+///   .hollow-container {
 ///     ...
 ///     @media (min-width: 48rem){}
 ///     @media (min-width: 64rem){}
@@ -28,8 +28,8 @@ $tokens-map: meta.module-variables(tokens);
 ///   }
 /// */
 @mixin create-container() {
-  $containers: map-by-string($tokens-map, 'houf-layout-container');
-  $padding: map-by-string($tokens-map, 'houf-layout-padding');
+  $containers: map-by-string($tokens-map, 'hollow-layout-container');
+  $padding: map-by-string($tokens-map, 'hollow-layout-padding');
 
   max-width: list.nth(map.values($containers), 1);
   padding: 0 list.nth(map.values($padding), 1);
@@ -40,7 +40,7 @@ $tokens-map: meta.module-variables(tokens);
     @if (
       list.index(
           map.keys($containers),
-          'houf-layout-container-#{$breakpoint}'
+          'hollow-layout-container-#{$breakpoint}'
         ) !=
         1
     ) {
@@ -48,8 +48,8 @@ $tokens-map: meta.module-variables(tokens);
         max-width: $container;
         padding: 0
           var(
-            --houf_layout_padding_#{$breakpoint},
-            map.get($padding, 'houf-layout-padding-#{$breakpoint}')
+            --hollow_layout_padding_#{$breakpoint},
+            map.get($padding, 'hollow-layout-padding-#{$breakpoint}')
           );
       }
     }
@@ -61,19 +61,19 @@ $tokens-map: meta.module-variables(tokens);
         @if (
           list.index(
               map.keys($containers),
-              'houf-layout-container-#{$breakpoint}'
+              'hollow-layout-container-#{$breakpoint}'
             ) >=
             list.index(
               map.keys($containers),
-              'houf-layout-container-#{$breakpoint-second}'
+              'hollow-layout-container-#{$breakpoint-second}'
             )
         ) {
           @include media-q($from: $breakpoint-second, $media-type: 'screen') {
             max-width: $container-second;
             padding: 0
               var(
-                --houf_layout_padding_#{$breakpoint},
-                map.get($padding, 'houf-layout-padding-#{$breakpoint-second}')
+                --hollow_layout_padding_#{$breakpoint},
+                map.get($padding, 'hollow-layout-padding-#{$breakpoint-second}')
               );
           }
         }
@@ -86,11 +86,11 @@ $tokens-map: meta.module-variables(tokens);
 /// @group module-internal
 /// @todo renomear ou remover e usar os helpers de padding
 /// @example scss
-///   .houf-container-fluid {
+///   .hollow-container-fluid {
 ///     @include create-container-fluid();
 ///   }
 ///   /* output:
-///   .houf-container-fluid {
+///   .hollow-container-fluid {
 ///     ...
 ///     @media (min-width: 48rem){}
 ///     @media (min-width: 64rem){}
@@ -99,13 +99,13 @@ $tokens-map: meta.module-variables(tokens);
 ///   }
 /// */
 @mixin create-container-fluid() {
-  $paddings: map-by-string($tokens-map, 'houf-layout-padding');
+  $paddings: map-by-string($tokens-map, 'hollow-layout-padding');
 
   @each $key, $padding in $paddings {
     $breakpoint: string-key-split($key, '-', 4);
 
     @include media-q($from: $breakpoint, $media-type: 'screen') {
-      $paddingValue: var(--houf_layout_padding_#{$breakpoint}, $padding);
+      $paddingValue: var(--hollow_layout_padding_#{$breakpoint}, $padding);
 
       padding-left: $paddingValue;
       padding-right: $paddingValue;
@@ -114,14 +114,14 @@ $tokens-map: meta.module-variables(tokens);
 }
 
 /// Gera rows responsivos. A quantidade de colunas é baseada nos tokens
-/// $houf_layout_columns
+/// $hollow_layout_columns
 /// @group module-internal
 /// @example scss
-///   .houf-row {
+///   .hollow-row {
 ///     @include create-row();
 ///   }
 ///   /* output:
-///   .houf-row {
+///   .hollow-row {
 ///     ...
 ///     @media (min-width: 48rem){}
 ///     @media (min-width: 64rem){}
@@ -130,8 +130,8 @@ $tokens-map: meta.module-variables(tokens);
 ///   }
 /// */
 @mixin create-row() {
-  $rows: map-by-string($tokens-map, 'houf-layout-columns');
-  $gutters: map-by-string($tokens-map, 'houf-layout-gutter');
+  $rows: map-by-string($tokens-map, 'hollow-layout-columns');
+  $gutters: map-by-string($tokens-map, 'hollow-layout-gutter');
   $minGutterKey: --#{str-replace(list.nth(map.keys($gutters), 1), '-', '_')};
 
   gap: var($minGutterKey, #{get-min($gutters)}rem);
@@ -141,12 +141,12 @@ $tokens-map: meta.module-variables(tokens);
     $breakpoint: string-key-split($key, '-', 4);
 
     @if (
-      list.index(map.keys($rows), 'houf-layout-columns-#{$breakpoint}') != 1
+      list.index(map.keys($rows), 'hollow-layout-columns-#{$breakpoint}') != 1
     ) {
       @include media-q($from: $breakpoint, $media-type: 'screen') {
         gap: var(
-          --houf_layout_gutter_#{$breakpoint},
-          map.get($gutters, 'houf-layout-gutter-#{$breakpoint}')
+          --hollow_layout_gutter_#{$breakpoint},
+          map.get($gutters, 'hollow-layout-gutter-#{$breakpoint}')
         );
         grid-template-columns: repeat($row, minmax(0, 1fr));
       }
@@ -155,20 +155,20 @@ $tokens-map: meta.module-variables(tokens);
 }
 
 /// Gera rows responsivos com número máximo de colunas. A quantidade de colunas
-/// é baseada nos tokens $houf_layout_columns
+/// é baseada nos tokens $hollow_layout_columns
 /// @group module-internal
 /// @example scss
-///   .houf-row {
+///   .hollow-row {
 ///     @include create-row-max();
 ///   }
-///   /* output: .houf-row-8 {...} .houf-row-fixed-4 {...} */
+///   /* output: .hollow-row-8 {...} .hollow-row-fixed-4 {...} */
 @mixin create-row-max() {
-  $rows: map-by-string($tokens-map, 'houf-layout-columns');
-  $gutters: map-by-string($tokens-map, 'houf-layout-gutter');
+  $rows: map-by-string($tokens-map, 'hollow-layout-columns');
+  $gutters: map-by-string($tokens-map, 'hollow-layout-gutter');
   $minGutterKey: --#{str-replace(list.nth(map.keys($gutters), 1), '-', '_')};
 
   @each $key, $row in $rows {
-    // gera .houf-row-4 .houf-row-8
+    // gera .hollow-row-4 .hollow-row-8
     @if (get-max($rows) > $row) {
       &-#{$row} {
         gap: var($minGutterKey, #{get-min($gutters)}rem);
@@ -182,15 +182,15 @@ $tokens-map: meta.module-variables(tokens);
               (
                 list.index(
                     map.keys($rows),
-                    'houf-layout-columns-#{$breakpoint}'
+                    'hollow-layout-columns-#{$breakpoint}'
                   ) !=
                   1
               )
           ) {
             @include media-q($from: $breakpoint, $media-type: 'screen') {
               gap: var(
-                --houf_layout_gutter_#{$breakpoint},
-                map.get($gutters, 'houf-layout-gutter-#{$breakpoint}')
+                --hollow_layout_gutter_#{$breakpoint},
+                map.get($gutters, 'hollow-layout-gutter-#{$breakpoint}')
               );
               grid-template-columns: repeat($row-point, minmax(0, 1fr));
             }
@@ -202,23 +202,23 @@ $tokens-map: meta.module-variables(tokens);
 }
 
 /// Gera rows não responsivos, com número fixo de colunas. A quantidade de
-/// colunas é baseada nos tokens $houf_layout_columns
+/// colunas é baseada nos tokens $hollow_layout_columns
 /// @group module-internal
 /// @example scss
-///   .houf-row {
+///   .hollow-row {
 ///     @include create-row-fixed();
 ///   }
-///   /* output: .houf-row-fixed-12 {...} .houf-row-fixed-8 {...} ... */
+///   /* output: .hollow-row-fixed-12 {...} .hollow-row-fixed-8 {...} ... */
 @mixin create-row-fixed() {
-  $rows: map-by-string($tokens-map, 'houf-layout-columns');
+  $rows: map-by-string($tokens-map, 'hollow-layout-columns');
   $rowList: list-remove-duplicate(map.values($rows));
-  $gutters: map-by-string($tokens-map, 'houf-layout-gutter');
+  $gutters: map-by-string($tokens-map, 'hollow-layout-gutter');
   $minGutterKey: --#{str-replace(list.nth(map.keys($gutters), 1), '-', '_')};
 
-  // gera .houf-row-fixed-4, houf-row-fixed-8...
+  // gera .hollow-row-fixed-4, hollow-row-fixed-8...
   @each $row in $rowList {
     &-fixed-#{$row} {
-      $gutters: map-by-string($tokens-map, 'houf-layout-gutter');
+      $gutters: map-by-string($tokens-map, 'hollow-layout-gutter');
 
       gap: var($minGutterKey, #{get-min($gutters)}rem);
       grid-template-columns: repeat($row, minmax(0, 1fr));
@@ -229,10 +229,10 @@ $tokens-map: meta.module-variables(tokens);
 
         // ignora tamanho xs, pois esse já é padrão
         @if (
-          list.index(map.keys($rows), 'houf-layout-columns-#{$breakpoint}') != 1
+          list.index(map.keys($rows), 'hollow-layout-columns-#{$breakpoint}') != 1
         ) {
           @include media-q($from: $breakpoint, $media-type: 'screen') {
-            gap: var(--houf_layout_gutter_#{$breakpoint}, $gutter);
+            gap: var(--hollow_layout_gutter_#{$breakpoint}, $gutter);
           }
         }
       }
@@ -243,12 +243,12 @@ $tokens-map: meta.module-variables(tokens);
 /// Gera colunas e offsets responsivos e não responsivos
 /// @group module-internal
 /// @example scss
-///   .houf-col {
+///   .hollow-col {
 ///     @include create-columns();
 ///   }
 ///   /* output:
-///   .houf-column-1,
-///     [class*='houf-row-fixed'] .houf-column-1 {
+///   .hollow-column-1,
+///     [class*='hollow-row-fixed'] .hollow-column-1 {
 ///     ...
 ///     @media (min-width: 48rem){}
 ///     @media (min-width: 64rem){}
@@ -257,12 +257,12 @@ $tokens-map: meta.module-variables(tokens);
 ///   }
 /// */
 @mixin create-columns() {
-  $columns: map-by-string($tokens-map, 'houf-layout-columns');
+  $columns: map-by-string($tokens-map, 'hollow-layout-columns');
 
-  // gera houf-col-[1,2,3...] houf-col-offset-[1,2,3...]
+  // gera hollow-col-[1,2,3...] hollow-col-offset-[1,2,3...]
   @for $i from 1 through get-max($columns) {
     &-#{$i},
-    [class*='houf-row-fixed'] &-#{$i} {
+    [class*='hollow-row-fixed'] &-#{$i} {
       grid-column-end: span $i;
     }
 
@@ -281,7 +281,7 @@ $tokens-map: meta.module-variables(tokens);
 
       @if $i >
         $column and
-        map-next-value($columns, 'houf-layout-columns-#{$breakpoint}')
+        map-next-value($columns, 'hollow-layout-columns-#{$breakpoint}')
       {
         @include media-q($until: $breakpoint, $media-type: 'screen') {
           &-#{$i} {
@@ -296,19 +296,19 @@ $tokens-map: meta.module-variables(tokens);
     }
   }
 
-  // gera houf-col{-offset}-[xs,sm,md...]-[1,2,3...]
+  // gera hollow-col{-offset}-[xs,sm,md...]-[1,2,3...]
   @each $key, $column in $columns {
     $breakpoint: string-key-split($key, '-', 4);
 
     @include media-q($from: $breakpoint, $media-type: 'screen') {
       @for $i from 1 through $column {
         &-#{$breakpoint}-#{$i},
-        [class*='houf-row-fixed'] &-#{$breakpoint}-#{$i} {
+        [class*='hollow-row-fixed'] &-#{$breakpoint}-#{$i} {
           grid-column-end: span $i;
         }
 
         &-offset-#{$breakpoint}-#{$i},
-        [class*='houf-row-fixed'] &-offset-#{$breakpoint}-#{$i} {
+        [class*='hollow-row-fixed'] &-offset-#{$breakpoint}-#{$i} {
           grid-column-start: $i;
         }
       }
@@ -319,22 +319,22 @@ $tokens-map: meta.module-variables(tokens);
 /// Gera gutters não responsivos
 /// @group module-internal
 /// @example scss
-///   .houf-gutters {
+///   .hollow-gutters {
 ///     @include create-gutters();
 ///   }
 ///   /* output:
-///   .houf-gutters-sm {
-///     gap: var(--houf_layout_gutter_sm, 1rem);
+///   .hollow-gutters-sm {
+///     gap: var(--hollow_layout_gutter_sm, 1rem);
 ///   }*/
 @mixin create-gutters() {
-  $gutters: map-by-string($tokens-map, 'houf-layout-gutter');
+  $gutters: map-by-string($tokens-map, 'hollow-layout-gutter');
 
   // gera &-(xs/sm/md/lg/xl)
   @each $key, $gutter in $gutters {
     &-#{string-key-split($key, '-', 4)} {
       $breakpoint: string-key-split($key, '-', 4);
-      // stylelint-disable-next-line declaration-no-important -- helper
-      gap: var(--houf_layout_gutter_#{$breakpoint}, #{$gutter}) !important;
+
+      gap: var(--hollow_layout_gutter_#{$breakpoint}, #{$gutter}) !important;
     }
   }
 }
