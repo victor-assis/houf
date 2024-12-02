@@ -31,7 +31,7 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "npx --no-install semantic-release -e semantic-release-monorepo"
+          "npx --no-install semantic-release -e ./packages/tools/.releaserc.json"
         ]
       }
     },
