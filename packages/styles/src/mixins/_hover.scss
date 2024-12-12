@@ -1,5 +1,5 @@
 /*
-** Hollom styles - Hover Mixins
+** Odyspace styles - Hover Mixins
 */
 @use './support' as *;
 
@@ -15,7 +15,7 @@
 ///   }
 ///
 @mixin hover() {
-  @include holl-only-for-desktop() {
+  @include ody-only-for-desktop() {
     // precisa ser dessa forma por causa do ':host' dos botões
     /* stylelint-disable selector-not-notation */
     &:hover:not(:disabled):not([aria-disabled='true']),

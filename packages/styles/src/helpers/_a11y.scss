@@ -1,9 +1,9 @@
 /*
-** Hollom Styles Helpers A11y
+** Odyspace Styles Helpers A11y
 */
 @use '../functions/unit-transform' as *;
 
-%holl-form-focus-visible {
+%ody-form-focus-visible {
   margin-left: rem(-3);
   margin-right: rem(-3);
   padding-left: rem(3);
@@ -11,7 +11,7 @@
   width: calc(100% + #{rem(6)});
 }
 
-.holl-sr-only {
+.ody-sr-only {
   clip: rect(0, 0, 0, 0);
   pointer-events: none;
   position: fixed;

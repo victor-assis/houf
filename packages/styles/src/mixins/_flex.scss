@@ -1,5 +1,5 @@
 /*
-** Hollom styles - Flexbox Mixins
+** Odyspace styles - Flexbox Mixins
 */
 @use 'tokens' as tokens;
 @use '../functions/tokens-handler' as *;
@@ -38,7 +38,7 @@ $properties: (
 );
 
 @mixin create-flex-helpers() {
-  $breakpoints: map-by-string($tokens-map, 'holl-layout-breakpoint');
+  $breakpoints: map-by-string($tokens-map, 'ody-layout-breakpoint');
 
   @each $key, $breakpoint in map.keys($breakpoints) {
     $breakpoint: string-key-split($key, '-', 4);
@@ -47,7 +47,7 @@ $properties: (
       @each $key, $value in map.get($properties, $property) {
         @if type-of($value: $value) == 'list' {
           @each $value in $value {
-            @if (list.index(map.keys($breakpoints), 'holl-layout-breakpoint-#{$breakpoint}') == 1) {
+            @if (list.index(map.keys($breakpoints), 'ody-layout-breakpoint-#{$breakpoint}') == 1) {
               $class-name: '';
 
               @if ($value == '0') or ($value == '1') {
@@ -87,7 +87,7 @@ $properties: (
         }
 
         @else {
-          @if (list.index(map.keys($breakpoints), 'holl-layout-breakpoint-#{$breakpoint}') == 1) {
+          @if (list.index(map.keys($breakpoints), 'ody-layout-breakpoint-#{$breakpoint}') == 1) {
             &-#{$property}-#{$key} {
               #{$property}: #{$value} !important;
             }

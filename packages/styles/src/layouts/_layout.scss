@@ -1,76 +1,76 @@
 /*
-** Hollom Styles Layout
+** Odyspace Styles Layout
 */
 @use 'tokens' as *;
 @use '../mixins/layout' as *;
 @use '../mixins/media-query' as *;
 
-%holl-container {
+%ody-container {
   box-sizing: border-box;
   margin: 0 auto;
   width: 100%;
 }
 
-%holl-row {
+%ody-row {
   display: grid;
   margin: 0;
   width: 100%;
 }
 
-%holl-col {
+%ody-col {
   grid-column-end: auto;
   margin: 0;
   width: auto;
 }
 
 /// @group module-layout
-[class*='holl-container'] {
-  @extend %holl-container;
+[class*='ody-container'] {
+  @extend %ody-container;
 }
 
 /// @group module-layout
-.holl-container {
+.ody-container {
   @include create-container();
 }
 
 /// @group module-layout
-.holl-container-fluid {
+.ody-container-fluid {
   @include create-container-fluid();
 }
 
 /// @group module-layout
-[class*='holl-row'] {
-  @extend %holl-row;
+[class*='ody-row'] {
+  @extend %ody-row;
 }
 
 /// @group module-layout
-.holl-row {
+.ody-row {
   @include create-row();
   @include create-row-max();
   @include create-row-fixed();
 }
 
 /// @group module-layout
-.holl-no-gutters {
+.ody-no-gutters {
   gap: 0 !important;
 }
 
-.holl-gutters {
+.ody-gutters {
   @include create-gutters();
 }
 
 /// @group module-layout
-[class*='holl-col-'] {
-  @extend %holl-col;
+[class*='ody-col-'] {
+  @extend %ody-col;
 }
 
 /// @group module-layout
-.holl-col {
-  @extend %holl-col;
+.ody-col {
+  @extend %ody-col;
 
   @include create-columns();
 }
 
-.holl-col-auto {
+.ody-col-auto {
   grid-row: 1 / 2;
 }

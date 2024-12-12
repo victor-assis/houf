@@ -1,9 +1,9 @@
 /*
-** Hollom Styles Flexbox
+** Odyspace Styles Flexbox
 */
 @use '../mixins/flex' as *;
 
 /// @group module-flex
-.holl {
+.ody {
   @include create-flex-helpers();
 }

@@ -4,6 +4,7 @@
   "sourceRoot": "packages/tools/src",
   "projectType": "library",
   "tags": [],
+  "implicitDependencies": ["tokens"],
   "targets": {
     "build": {
       "executor": "@nx/esbuild:esbuild",

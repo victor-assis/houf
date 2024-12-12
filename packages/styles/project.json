@@ -4,6 +4,7 @@
   "sourceRoot": "packages/styles/src",
   "projectType": "library",
   "tags": [],
+  "implicitDependencies": ["tokens"],
   "targets": {
     "start": {
       "executor": "nx:run-commands",
@@ -16,6 +17,7 @@
     },
     "build": {
       "executor": "nx:run-commands",
+      "dependsOn": ["^build"],
       "options": {
         "commands": [
           "sass packages/styles/src:dist/styles/css --style=compressed --no-source-map --stop-on-error --load-path=node_modules --load-path=dist/tokens",

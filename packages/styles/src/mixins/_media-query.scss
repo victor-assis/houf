@@ -1,5 +1,5 @@
 /*
-** Hollom styles - Media Query Mixins
+** Odyspace styles - Media Query Mixins
 */
 @use 'tokens' as *;
 @use '../functions/unit-transform' as *;
@@ -11,17 +11,17 @@
 /// @type Map
 /// @group module-mixins
 /// @example scss
-///   xs: $holl_layout_breakpoint_xs,
-///   sm: $holl_layout_breakpoint_sm,
-///   md: $holl_layout_breakpoint_md,
-///   lg: $holl_layout_breakpoint_lg,
-///   xl: $holl_layout_breakpoint_xl
+///   xs: $ody_layout_breakpoint_xs,
+///   sm: $ody_layout_breakpoint_sm,
+///   md: $ody_layout_breakpoint_md,
+///   lg: $ody_layout_breakpoint_lg,
+///   xl: $ody_layout_breakpoint_xl
 $breakpoints: (
-  xs: $holl_layout_breakpoint_xs,
-  sm: $holl_layout_breakpoint_sm,
-  md: $holl_layout_breakpoint_md,
-  lg: $holl_layout_breakpoint_lg,
-  xl: $holl_layout_breakpoint_xl
+  xs: $ody_layout_breakpoint_xs,
+  sm: $ody_layout_breakpoint_sm,
+  md: $ody_layout_breakpoint_md,
+  lg: $ody_layout_breakpoint_lg,
+  xl: $ody_layout_breakpoint_xl
 ) !default;
 
 /// Gera @media com padrões dos tokens

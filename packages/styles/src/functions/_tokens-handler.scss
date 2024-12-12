@@ -184,7 +184,7 @@
 /// @param {String} $search - substring para substituir
 /// @param {String} $replace ('') - novo valor
 /// @return {String} - string atualizada
-/// @example str-reclace(holl-padding-xs, '-', '_') // -> holl_padding_xs
+/// @example str-reclace(ody-padding-xs, '-', '_') // -> ody_padding_xs
 ///
 @function str-replace($string, $search, $replace: '') {
   $index: string.index($string, $search);
@@ -204,7 +204,7 @@
 /// Função para extrair o fallback de uma variável CSS
 /// @param $value O valor que contém a função `var()`.
 /// @return Retorna apenas o fallback (ex.: `1rem`).
-/// @example extract-fallback(var(--holl_layout_gutter_xs, 1rem)) // -> 1rem
+/// @example extract-fallback(var(--ody_layout_gutter_xs, 1rem)) // -> 1rem
 ///
 @function extract-fallback($value) {
   @if string.index($value, 'var(') {
